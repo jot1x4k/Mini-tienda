@@ -30,17 +30,17 @@ public class Product {
     @PositiveOrZero(message = "El stock no puede ser negativo&quot")
     private Integer stock;
 
-    private String imagen;
+    private String image;
 
     public Product() {
 
     }
 
-    public Product(String nombre, Double precio, Integer stock, String imagen) {
+    public Product(String nombre, Double precio, Integer stock, String image) {
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
-        this.imagen = imagen;
+        this.image = image;
     }
 
     public Long getId() {
@@ -75,12 +75,12 @@ public class Product {
         this.stock = stock;
     }
 
-    public String getImagen() {
-        return imagen;
+    public String getImage() {
+        return image;
     }
 
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
+    public void setImage(String image) {
+        this.image = image;
     }
 
 }
