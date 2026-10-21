@@ -1,72 +1,68 @@
 package dev.juan.tienda_api.controller;
-
+ 
 import java.util.List;
+ 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.juan.tienda_api.model.Product;
-import dev.juan.tienda_api.repository.ProductRepository;
+import dev.juan.tienda_api.service.ProductService;
 import jakarta.validation.Valid;
-
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PutMapping;
-
+ 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/products") // prefijo común de todas las rutas de esta clase
 public class ProductController {
-
-    private final ProductRepository repository;
-
-    public ProductController(ProductRepository repository) {
-        this.repository = repository;
+ 
+    private final ProductService servicio;
+ 
+    public ProductController(ProductService servicio) {
+        this.servicio = servicio;
     }
-
-    @GetMapping("")
-    public List<Product> findAllProducts() {
-        return repository.findAll();
+ 
+    // GET /api/Products
+    @GetMapping
+    public List<Product> listar() {
+        return servicio.listar();
     }
-
+ 
+    // GET /api/Products/3  -> {id} toma el valor 3
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable Long id) {
-        return repository.findById(id).orElse(null);
+    public Product buscar(@PathVariable Long id) {
+        return servicio.buscarPorId(id);
     }
-
-    @PostMapping("")
-    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product) {
-        Product saved_product = repository.save(product);
-        return new ResponseEntity<>(saved_product, HttpStatus.CREATED);
+ 
+    // POST /api/Products  con un JSON en el cuerpo
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Product crear(@Valid @RequestBody Product Product) {
+        return servicio.crear(Product);
     }
-
+ 
+    // PUT /api/Products/3  con un JSON en el cuerpo
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @Valid @RequestBody Product product) {
-        return repository.findById(id)
-                .map(existing -> {
-                    existing.setImage(product.getImage());
-                    existing.setNombre(product.getNombre());
-                    existing.setPrecio(product.getPrecio());
-                    existing.setStock(product.getStock());
-
-                    Product updatedProduct = repository.save(existing);
-
-                    return ResponseEntity.ok(updatedProduct);
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public Product actualizar(@PathVariable Long id,
+                               @Valid @RequestBody Product Product) {
+        return servicio.actualizar(id, Product);
     }
-
-    @DeleteMapping ("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        return repository.findById(id)
-        .map(product -> {
-            repository.delete(product);
-            return ResponseEntity.noContent().<Void>build();
-        })
-        .orElse(ResponseEntity.notFound().build());
+ 
+    // DELETE /api/Products/3
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void eliminar(@PathVariable Long id) {
+        servicio.eliminar(id);
     }
-
+ 
+    // POST /api/Products/3/comprar
+    @PostMapping("/{id}/comprar")
+    public Product comprar(@PathVariable Long id) {
+        return servicio.comprar(id);
+    }
 }
