@@ -46,3 +46,24 @@ Content-Type: application/json
  
 ### 8. Eliminar el producto 5
 DELETE {{base}}/5
+
+### 9. Aplicar 20% a producto id 1
+POST {{base}}/1/descuento/20
+
+### 10. Aplicar 80% a producto id 2
+POST {{base}}/2/descuento/80
+
+### 11. Aplicar 10% a producto id 4 con stock 0
+POST {{base}}/4/descuento/10
+
+### 3. Crear un producto
+POST {{base}}
+Content-Type: application/json
+ 
+{
+  "nombre": "Lulo",
+  "precio": 7.5,
+  "stock": 4,
+  "imagen": "/imagenes/lulo.jpg",
+  "descuento": 70
+}
