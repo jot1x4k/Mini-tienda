@@ -21,3 +21,16 @@
   background-color: #c0392b;
   color: white;
 }
+
+.tachado {
+  color: #c0392b;
+}
+
+s .tachado {
+  text-decoration:line-through;
+}
+
+.oferta {
+  font-weight: 700;
+  color: #2bc046;
+}

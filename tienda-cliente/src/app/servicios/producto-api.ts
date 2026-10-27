@@ -29,4 +29,8 @@ export class ProductoApi {
   comprar(id: number): Observable<Producto> {
     return this.http.post<Producto>(`${this.url}/${id}/comprar`, {});
   }
+
+  aplicarDescuento(id: number, porcentaje:number) {
+    return this.http.post<void>(`$this.url/${id}/descuento/${porcentaje}`, {})
+  }
 }

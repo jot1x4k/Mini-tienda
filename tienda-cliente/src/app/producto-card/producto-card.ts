@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, computed } from '@angular/core';
 import { Producto } from '../producto/producto';
  
 @Component({
@@ -12,6 +12,10 @@ export class ProductoCard {
   comprar = output<number>();
   reponer = output<Producto>();   // NUEVO
   eliminar = output<number>();    // NUEVO
+  aplicarDescuento = output<number>();
+
+  total = computed(() => this.producto().precio - (this.producto().precio * (this.producto().descuento / 100))
+  );
  
   alHacerClic() {
     this.comprar.emit(this.producto().id);
