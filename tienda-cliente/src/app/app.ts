@@ -21,7 +21,7 @@ export class App implements OnInit {
   esError = signal(false);
  
   total = computed(() =>
-    this.carrito().reduce((suma, item) => suma + item.precio, 0)
+    this.carrito().reduce((suma, item) => suma + (item.precio - (item.precio * (item.descuento / 100))), 0)
   );
  
   ngOnInit() {

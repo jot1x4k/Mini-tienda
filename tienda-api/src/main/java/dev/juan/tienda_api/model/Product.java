@@ -1,5 +1,8 @@
 package dev.juan.tienda_api.model;
 
+import org.hibernate.validator.constraints.Range;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,9 +29,13 @@ public class Product {
     @PositiveOrZero(message = "El precio no puede ser negativo")
     private Double precio;
 
-    @NotNull(message = "El stock es obligatorio&quot")
-    @PositiveOrZero(message = "El stock no puede ser negativo&quot")
+    @NotNull(message = "El stock es obligatorio")
+    @PositiveOrZero(message = "El stock no puede ser negativo")
     private Integer stock;
+
+    @PositiveOrZero(message = "El descuento no puede ser negativo")
+    @Range(min = 0, max = 50)
+    private Integer descuento = 0;
 
     private String image;
 
@@ -81,6 +88,14 @@ public class Product {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Integer getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(Integer descuento) {
+        this.descuento = descuento;
     }
 
 }

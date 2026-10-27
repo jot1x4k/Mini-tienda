@@ -65,4 +65,10 @@ public class ProductController {
     public Product comprar(@PathVariable Long id) {
         return servicio.comprar(id);
     }
+
+    @PostMapping("{id}/descuento/{porcentaje}")
+    public Product ofertaDescuento(@PathVariable Long id, @PathVariable Integer porcentaje) {
+        return servicio.aplicarDescuento(id, porcentaje);
+    }
+    
 }

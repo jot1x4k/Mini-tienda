@@ -14,6 +14,7 @@ export class ProductoForm {
   precio = signal(0);
   stock = signal(0);
   imagen = signal('');
+  descuento = signal(0);
  
   guardar = output<Omit<Producto, 'id'>>();
  
@@ -22,7 +23,8 @@ export class ProductoForm {
       nombre: this.nombre(),
       precio: this.precio(),
       stock: this.stock(),
-      imagen: this.imagen()
+      imagen: this.imagen(),
+      descuento: this.descuento()
     });
     // Limpiar el formulario
     this.nombre.set('');

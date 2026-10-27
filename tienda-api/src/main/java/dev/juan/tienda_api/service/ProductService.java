@@ -60,4 +60,20 @@ public class ProductService {
         return repositorio.save(producto);
     }
 
+    public Product aplicarDescuento(Long id, Integer descuento) {
+        Product producto = buscarPorId(id);
+        if (producto.getStock() <= 0 && descuento > 0) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT, "No se puede poner en oferta un producto agotado");
+        }
+
+        if (descuento < 0 || descuento > 50) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "El valor del descuento debe estar entre 0 y 50");
+        }
+
+        producto.setDescuento(descuento);
+        return repositorio.save(producto);
+    }
+
 }
