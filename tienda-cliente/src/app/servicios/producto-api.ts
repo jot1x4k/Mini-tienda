@@ -7,7 +7,7 @@ import { Producto } from '../producto/producto';
 @Injectable({ providedIn: 'root' })
 export class ProductoApi {
   private http = inject(HttpClient);
-  private url = 'http://localhost:8080/api/productos';
+  private url = 'http://localhost:8080/api/products';
  
   listar(): Observable<Producto[]> {
     return this.http.get<Producto[]>(this.url);

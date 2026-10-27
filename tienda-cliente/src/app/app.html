@@ -1,16 +1,24 @@
 <h1>Tienda de productos</h1>
-
+ 
 <div class="contenedor">
-
   <section class="grid-productos">
-    @for (p of productos(); track p.id) {
-      <app-producto-card [producto]="p" (comprar)="agregarAlCarrito($event)" />
+    @if (cargando()) {
+      <p>Cargando productos...</p>
+    } @else {
+      @for (p of productos(); track p.id) {
+        <app-producto-card
+          [producto]="p"
+          (comprar)="agregarAlCarrito($event)"
+          (reponer)="reponerStock($event)"
+          (eliminar)="eliminarProducto($event)" />
+      } @empty {
+        <p>No hay productos registrados.</p>
+      }
     }
   </section>
-
+ 
   <aside class="panel-carrito">
     <h2>Tu carrito</h2>
-
     @if (carrito().length === 0) {
       <p>El carrito está vacío.</p>
     } @else {
@@ -20,12 +28,12 @@
         }
       </ul>
     }
-
     <h3>Total a pagar: ${{ total() }}</h3>
-
+ 
     @if (mensaje()) {
       <p class="aviso" [class.aviso-error]="esError()">{{ mensaje() }}</p>
     }
+ 
+    <app-producto-form (guardar)="crearProducto($event)" />
   </aside>
-
 </div>

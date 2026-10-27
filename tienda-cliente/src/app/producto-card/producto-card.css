@@ -6,3 +6,18 @@
   width: 200px;
   text-align: center;
 }
+.acciones-admin {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+ 
+.acciones-admin button {
+  flex: 1;
+  font-size: 0.8rem;
+}
+ 
+.btn-peligro {
+  background-color: #c0392b;
+  color: white;
+}
