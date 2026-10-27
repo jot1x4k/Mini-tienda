@@ -31,6 +31,6 @@ export class ProductoApi {
   }
 
   aplicarDescuento(id: number, porcentaje:number) {
-    return this.http.post<void>(`$this.url/${id}/descuento/${porcentaje}`, {})
+    return this.http.post<void>(`${this.url}/${id}/descuento/${porcentaje}`, {})
   }
 }

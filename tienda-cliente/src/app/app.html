@@ -10,7 +10,8 @@
           [producto]="p"
           (comprar)="agregarAlCarrito($event)"
           (reponer)="reponerStock($event)"
-          (eliminar)="eliminarProducto($event)" />
+          (eliminar)="eliminarProducto($event)" 
+           (aplicarDescuento)="actualizarDescuento($event)"/>
       } @empty {
         <p>No hay productos registrados.</p>
       }

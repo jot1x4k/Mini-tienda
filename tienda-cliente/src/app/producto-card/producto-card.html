@@ -2,7 +2,9 @@
   <img [src]="producto().imagen" [alt]="producto().nombre" class="img-producto" />
   <h3>{{ producto().nombre }}</h3>
   @if (producto().descuento > 0) {
-    <p class="tachado">Precio anterior: <s>${{ producto().precio }}</s></p>
+    <p class="tachado">
+      Precio anterior: <s>${{ producto().precio }}</s>
+    </p>
     <p class="oferta">OFERTA -${{ producto().descuento }}%</p>
     <p class="oferta">Precio final: ${{ total() }}</p>
   } @else {
@@ -21,5 +23,22 @@
   <div class="acciones-admin">
     <button class="btn-secundario" (click)="reponer.emit(producto())">+5 stock</button>
     <button class="btn-peligro" (click)="eliminar.emit(producto().id)">Eliminar</button>
+
+    <div class="descuento">
+      <label for="descuento-input"> Descuento (%) </label>
+
+      <input
+        name="descuento-input"
+        type="number"
+        min="0"
+        max="50"
+        step="1"
+        [value]="descuentoNuevo"
+        (input)="descuentoNuevo = +$any($event.target).value"
+        placeholder="0-50"
+      />
+
+      <button class="btn-secundario" (click)="aplicarDescuentoClick()">Aplicar descuento</button>
+    </div>
   </div>
 </div>
