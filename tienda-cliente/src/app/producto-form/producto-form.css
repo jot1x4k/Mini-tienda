@@ -1,18 +1,65 @@
+
 .formulario {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-top: 24px;
-  padding-top: 16px;
-  border-top: 1px solid #ddd;
+  gap: 16px;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--borde);
 }
- 
+
 .formulario label {
   display: flex;
   flex-direction: column;
+  gap: 7px;
+  color: var(--texto);
   font-size: 0.9rem;
+  font-weight: 550;
 }
- 
-.formulario input {
-  padding: 6px;
+
+.formulario input,
+.formulario select,
+.formulario textarea {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-control);
+  background: #fff;
+  font-weight: 400;
+  transition: border-color 150ms ease;
+}
+
+.formulario input::placeholder,
+.formulario textarea::placeholder {
+  color: #999e95;
+}
+
+.formulario input:focus,
+.formulario select:focus,
+.formulario textarea:focus {
+  border-color: var(--primario);
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(66 107 80 / 10%);
+}
+
+.formulario button {
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: var(--radio-control);
+  background: var(--primario);
+  color: white;
+  font-weight: 600;
+}
+
+.formulario button:hover:not(:disabled) {
+  background: var(--primario-hover);
+}
+
+@media (max-width: 480px) {
+  .formulario {
+    gap: 14px;
+  }
 }

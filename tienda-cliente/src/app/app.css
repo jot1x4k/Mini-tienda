@@ -1,36 +1,89 @@
+
 h1 {
-  background: #333;
-  color: white;
-  padding: 1rem;
-  text-align: center;
   margin: 0;
+  padding: 28px 32px;
+  background: #fff;
+  color: var(--texto);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  text-align: left;
+  border-bottom: 1px solid var(--borde);
 }
+
 .contenedor {
-  display: flex;
-  gap: 20px;
-  padding: 20px;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(270px, 0.8fr);
+  align-items: start;
+  gap: 32px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 32px;
 }
 
 .grid-productos {
-  flex: 2;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(min(100%, 220px), 1fr)
+  );
+  align-items: stretch;
+  gap: 22px;
+  min-width: 0;
 }
 
 .panel-carrito {
-  flex: 1;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  min-width: 0;
+  padding: 24px;
+  background: var(--superficie);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
 }
+
+.panel-carrito h2 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  letter-spacing: -0.025em;
+}
+
 .aviso {
-  color: green;
-  font-weight: bold;
+  color: var(--exito);
+  font-weight: 600;
 }
 
 .aviso-error {
-  color: red;
+  color: var(--peligro);
+  font-weight: 600;
+}
+
+@media (max-width: 850px) {
+  .contenedor {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 24px;
+    gap: 28px;
+  }
+
+  .panel-carrito {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    padding: 22px 18px;
+  }
+
+  .contenedor {
+    padding: 18px;
+    gap: 24px;
+  }
+
+  .grid-productos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .panel-carrito {
+    padding: 18px;
+  }
 }

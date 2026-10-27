@@ -1,6 +1,89 @@
-/* You can add global styles to this file, and also import other style files */
+
+:root {
+  color-scheme: light;
+
+  --fondo: #f7f7f3;
+  --superficie: #ffffff;
+  --texto: #242820;
+  --texto-secundario: #73786f;
+
+  --primario: #426b50;
+  --primario-hover: #34563f;
+  --primario-suave: #eaf1eb;
+
+  --borde: #e8e9e3;
+  --peligro: #b6423b;
+  --peligro-suave: #fbefed;
+  --exito: #34734a;
+
+  --radio: 14px;
+  --radio-control: 9px;
+  --sombra: 0 5px 20px rgb(35 45 30 / 5%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
   margin: 0;
+  font-family:
+    Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+input,
+select,
+textarea {
+  color: var(--texto);
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
+  outline: 3px solid rgb(66 107 80 / 25%);
+  outline-offset: 2px;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+p {
+  overflow-wrap: anywhere;
+}
+
+h2,
+h3 {
+  line-height: 1.3;
 }

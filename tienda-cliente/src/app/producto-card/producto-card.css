@@ -1,36 +1,195 @@
+
 .tarjeta {
-  background: rgb(172, 213, 247);
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
-  width: 200px;
-  text-align: center;
-}
-.acciones-admin {
   display: flex;
-  gap: 6px;
-  margin-top: 8px;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+  padding: 16px;
+  background: var(--superficie);
+  border: 0;
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  text-align: left;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
 }
- 
-.acciones-admin button {
-  flex: 1;
-  font-size: 0.8rem;
+
+@media (hover: hover) {
+  .tarjeta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgb(35 45 30 / 9%);
+  }
 }
- 
-.btn-peligro {
-  background-color: #c0392b;
-  color: white;
+
+.img-producto {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  padding: 8px;
+  margin-bottom: 14px;
+  border-radius: 10px;
+  background: #f8f8f5;
+}
+
+.tarjeta h3 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+}
+
+.tarjeta p {
+  margin: 5px 0;
+  font-size: 0.9rem;
 }
 
 .tachado {
-  color: #c0392b;
+  color: var(--texto-secundario);
+  font-size: 0.82rem !important;
 }
 
-s .tachado {
-  text-decoration:line-through;
+.tachado s {
+  text-decoration-thickness: 1px;
 }
 
 .oferta {
-  font-weight: 700;
-  color: #2bc046;
+  color: var(--primario);
+  font-weight: 650;
+}
+
+.disponible {
+  color: var(--exito);
+  font-size: 0.82rem !important;
+}
+
+.agotado {
+  color: var(--peligro);
+  font-weight: 600;
+  font-size: 0.82rem !important;
+}
+
+.tarjeta > button {
+  width: 100%;
+  min-height: 42px;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: var(--radio-control);
+  background: var(--primario);
+  color: #fff;
+  font-weight: 600;
+  transition: background 160ms ease;
+}
+
+.tarjeta > button:hover:not(:disabled) {
+  background: var(--primario-hover);
+}
+
+.acciones-admin {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--borde);
+}
+
+.acciones-admin button {
+  flex: 1 1 80px;
+  min-width: 0;
+  min-height: 36px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: #f1f2ed;
+  color: #454a42;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: background 150ms ease;
+}
+
+.acciones-admin .btn-secundario:hover:not(:disabled) {
+  background: var(--primario-suave);
+  color: var(--primario-hover);
+}
+
+.acciones-admin .btn-peligro {
+  background: var(--peligro-suave);
+  color: var(--peligro);
+}
+
+.acciones-admin .btn-peligro:hover:not(:disabled) {
+  background: #f5dfdc;
+}
+
+.descuento {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  width: 100%;
+  margin-top: 6px;
+}
+
+.descuento label {
+  color: var(--texto-secundario);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.descuento input {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-control);
+  background: #fff;
+}
+
+.descuento input:focus {
+  border-color: var(--primario);
+}
+
+.descuento button {
+  width: 100%;
+  min-height: 40px;
+}
+
+@media (max-width: 480px) {
+  .tarjeta {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .tarjeta h3 {
+    font-size: 0.92rem;
+  }
+
+  .img-producto {
+    aspect-ratio: 1 / 1;
+  }
+
+  .acciones-admin {
+    gap: 6px;
+  }
+
+  .acciones-admin button {
+    flex-basis: 65px;
+    padding: 8px 6px;
+    font-size: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tarjeta,
+  .tarjeta > button,
+  .acciones-admin button {
+    transition: none;
+  }
+
+  .tarjeta:hover {
+    transform: none;
+  }
 }
