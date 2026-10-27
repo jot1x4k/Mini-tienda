@@ -1,0 +1,14 @@
+<div class="tarjeta">
+  <h3>{{ producto().nombre }}</h3>
+  <p>Precio: ${{ producto().precio }}</p>
+
+  @if (producto().stock > 0) {
+    <p class="disponible">Stock: {{ producto().stock }}</p>
+  } @else {
+    <p class="agotado">Agotado</p>
+  }
+
+  <button (click)="alHacerClic()" [disabled]="producto().stock === 0">
+    Comprar
+  </button>
+</div>
