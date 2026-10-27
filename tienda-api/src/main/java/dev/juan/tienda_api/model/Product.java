@@ -1,5 +1,7 @@
 package dev.juan.tienda_api.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.hibernate.validator.constraints.Range;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
@@ -82,10 +84,12 @@ public class Product {
         this.stock = stock;
     }
 
+    @JsonProperty("imagen")
     public String getImage() {
         return image;
     }
 
+    @JsonProperty("imagen")
     public void setImage(String image) {
         this.image = image;
     }
