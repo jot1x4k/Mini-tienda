@@ -24,13 +24,15 @@ FROM eclipse-temurin:21-jre-jammy AS final
 
 WORKDIR /app
 
-# Usuario no privilegiado
-RUN useradd --system --uid 10001 appuser
+RUN useradd --system --uid 10001 appuser \
+    && mkdir -p /app/data \
+    && chown -R appuser:appuser /app
 
-COPY --from=build /app/app.jar app.jar
+COPY --from=build --chown=appuser:appuser /app/app.jar app.jar
 
 USER appuser
 
 EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
