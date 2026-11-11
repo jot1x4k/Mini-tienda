@@ -2,12 +2,13 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Producto } from '../producto/producto';
+import { environment } from '../../environments/environment';
  
 // providedIn: 'root' -> existe una sola instancia para toda la aplicación
 @Injectable({ providedIn: 'root' })
 export class ProductoApi {
   private http = inject(HttpClient);
-  private url = '/api/products';
+  private url = `${environment.apiURL}/products`;
  
   listar(): Observable<Producto[]> {
     return this.http.get<Producto[]>(this.url);

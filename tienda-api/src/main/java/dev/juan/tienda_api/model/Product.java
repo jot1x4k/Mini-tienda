@@ -3,7 +3,6 @@ package dev.juan.tienda_api.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.hibernate.validator.constraints.Range;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
