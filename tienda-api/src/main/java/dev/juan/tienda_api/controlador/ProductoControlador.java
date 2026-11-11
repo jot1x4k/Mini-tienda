@@ -1,7 +1,7 @@
-package dev.juan.tienda_api.controller;
- 
+package dev.juan.tienda_api.controlador;
+
 import java.util.List;
- 
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,62 +13,62 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.juan.tienda_api.model.Product;
-import dev.juan.tienda_api.service.ProductService;
+import dev.juan.tienda_api.modelo.Producto;
+import dev.juan.tienda_api.servicio.ProductoServicio;
 import jakarta.validation.Valid;
- 
+
 @RestController
-@RequestMapping("/api/products") // prefijo común de todas las rutas de esta clase
-public class ProductController {
- 
-    private final ProductService servicio;
- 
-    public ProductController(ProductService servicio) {
+@RequestMapping("/api/productos") // prefijo común de todas las rutas de esta clase
+public class ProductoControlador {
+
+    private final ProductoServicio servicio;
+
+    public ProductoControlador(ProductoServicio servicio) {
         this.servicio = servicio;
     }
- 
-    // GET /api/Products
+
+    // GET /api/productos
     @GetMapping
-    public List<Product> listar() {
+    public List<Producto> listar() {
         return servicio.listar();
     }
- 
-    // GET /api/Products/3  -> {id} toma el valor 3
+
+    // GET /api/productos/3  -> {id} toma el valor 3
     @GetMapping("/{id}")
-    public Product buscar(@PathVariable Long id) {
+    public Producto buscar(@PathVariable Long id) {
         return servicio.buscarPorId(id);
     }
- 
-    // POST /api/Products  con un JSON en el cuerpo
+
+    // POST /api/productos  con un JSON en el cuerpo
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Product crear(@Valid @RequestBody Product Product) {
-        return servicio.crear(Product);
+    public Producto crear(@Valid @RequestBody Producto producto) {
+        return servicio.crear(producto);
     }
- 
-    // PUT /api/Products/3  con un JSON en el cuerpo
+
+    // PUT /api/productos/3  con un JSON en el cuerpo
     @PutMapping("/{id}")
-    public Product actualizar(@PathVariable Long id,
-                               @Valid @RequestBody Product Product) {
-        return servicio.actualizar(id, Product);
+    public Producto actualizar(@PathVariable Long id,
+                               @Valid @RequestBody Producto producto) {
+        return servicio.actualizar(id, producto);
     }
- 
-    // DELETE /api/Products/3
+
+    // DELETE /api/productos/3
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminar(@PathVariable Long id) {
         servicio.eliminar(id);
     }
- 
-    // POST /api/Products/3/comprar
+
+    // POST /api/productos/3/comprar
     @PostMapping("/{id}/comprar")
-    public Product comprar(@PathVariable Long id) {
+    public Producto comprar(@PathVariable Long id) {
         return servicio.comprar(id);
     }
 
     @PostMapping("{id}/descuento/{porcentaje}")
-    public Product ofertaDescuento(@PathVariable Long id, @PathVariable Integer porcentaje) {
+    public Producto ofertaDescuento(@PathVariable Long id, @PathVariable Integer porcentaje) {
         return servicio.aplicarDescuento(id, porcentaje);
     }
-    
+
 }

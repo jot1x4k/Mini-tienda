@@ -1,6 +1,4 @@
-package dev.juan.tienda_api.model;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+package dev.juan.tienda_api.modelo;
 
 import org.hibernate.validator.constraints.Range;
 
@@ -15,8 +13,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
-@Table(name = "products")
-public class Product {
+@Table(name = "productos")
+public class Producto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,17 +36,17 @@ public class Product {
     @Range(min = 0, max = 50)
     private Integer descuento = 0;
 
-    private String image;
+    private String imagen;
 
-    public Product() {
+    public Producto() {
 
     }
 
-    public Product(String nombre, Double precio, Integer stock, String image) {
+    public Producto(String nombre, Double precio, Integer stock, String imagen) {
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
-        this.image = image;
+        this.imagen = imagen;
     }
 
     public Long getId() {
@@ -83,14 +81,12 @@ public class Product {
         this.stock = stock;
     }
 
-    @JsonProperty("imagen")
-    public String getImage() {
-        return image;
+    public String getImagen() {
+        return imagen;
     }
 
-    @JsonProperty("imagen")
-    public void setImage(String image) {
-        this.image = image;
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     public Integer getDescuento() {

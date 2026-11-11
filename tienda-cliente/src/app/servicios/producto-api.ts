@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class ProductoApi {
   private http = inject(HttpClient);
-  private url = `${environment.apiURL}/products`;
+  private url = `${environment.apiURL}/productos`;
  
   listar(): Observable<Producto[]> {
     return this.http.get<Producto[]>(this.url);

@@ -1,5 +1,5 @@
 
-package dev.juan.tienda_api.config;
+package dev.juan.tienda_api.configuracion;
 
 import java.util.Map;
 import java.util.stream.Collectors;

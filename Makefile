@@ -34,7 +34,7 @@ export SERVER_PORT = $(API_PORT)
 
 .PHONY: help dev api cliente install install-api install-cliente \
         test test-api test-cliente build build-api build-cliente \
-        clean health check
+        clean salud check
 
 help: ## Muestra los objetivos disponibles
 	@echo "mini-tienda — Spring Boot API + Angular CLI"
@@ -73,8 +73,8 @@ cliente: ## Levanta solo el cliente Angular (http://localhost:4200)
 	@echo ">> Cliente en http://$(HOST):$(CLIENT_PORT)"
 	@cd $(CLIENT_DIR) && $(NPM) start -- --port $(CLIENT_PORT) --host $(HOST) $(NPM_ARGS)
 
-health: ## Consulta el health check de la API
-	@curl -s -f "http://$(HOST):$(API_PORT)/api/health" && echo ""
+salud: ## Consulta el health check de la API
+	@curl -s -f "http://$(HOST):$(API_PORT)/api/salud" && echo ""
 
 # ------------------------------------------------------------------
 # Dependencias
