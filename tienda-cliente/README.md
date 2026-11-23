@@ -46,13 +46,19 @@ ng test
 
 ## Running end-to-end tests
 
-For end-to-end (e2e) testing, run:
+The project uses [Playwright](https://playwright.dev/) for end-to-end tests. The tests start both the API and the client automatically. Install the browser once and then run the tests:
 
 ```bash
-ng e2e
+npx playwright install chromium
+npm run e2e
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Other useful commands:
+
+```bash
+npm run e2e:ui       # modo interactivo
+npm run e2e:report   # abre el último informe HTML
+```
 
 ## Additional Resources
 

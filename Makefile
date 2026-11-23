@@ -32,8 +32,8 @@ NPM_ARGS    ?=
 # Spring Boot toma el puerto de la variable de entorno SERVER_PORT
 export SERVER_PORT = $(API_PORT)
 
-.PHONY: help dev api cliente install install-api install-cliente \
-        test test-api test-cliente build build-api build-cliente \
+.PHONY: help dev api cliente install install-api install-cliente install-e2e \
+        test test-api test-cliente test-e2e build build-api build-cliente \
         clean salud check
 
 help: ## Muestra los objetivos disponibles
@@ -88,6 +88,9 @@ install-api: ## Descarga las dependencias de Maven
 install-cliente: ## Instala las dependencias npm (npm ci si hay lockfile)
 	@cd $(CLIENT_DIR) && if [ -f package-lock.json ]; then $(NPM) ci; else $(NPM) install; fi
 
+install-e2e: ## Instala el navegador Chromium que usan las pruebas E2E
+	@cd $(CLIENT_DIR) && npx playwright install chromium
+
 # ------------------------------------------------------------------
 # Pruebas y builds
 # ------------------------------------------------------------------
@@ -99,6 +102,9 @@ test-api: ## Ejecuta las pruebas de la API
 
 test-cliente: ## Ejecuta las pruebas del cliente
 	@cd $(CLIENT_DIR) && $(NPM) test -- --watch=false $(NPM_ARGS)
+
+test-e2e: ## Ejecuta las pruebas E2E de Playwright (API + cliente)
+	@cd $(CLIENT_DIR) && $(NPM) run e2e $(NPM_ARGS)
 
 build: build-api build-cliente ## Compila API y cliente
 
@@ -114,5 +120,6 @@ build-cliente: ## Compila el cliente para producción
 
 clean: ## Limpia los artefactos de compilación
 	@cd $(API_DIR) && $(MVN) clean $(MVN_ARGS)
-	@rm -rf $(CLIENT_DIR)/dist $(CLIENT_DIR)/.angular/cache
+	@rm -rf $(CLIENT_DIR)/dist $(CLIENT_DIR)/.angular/cache \
+		$(CLIENT_DIR)/playwright-report $(CLIENT_DIR)/test-results
 	@echo ">> Limpio"

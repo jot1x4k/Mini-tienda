@@ -1,0 +1,11 @@
+# Dependencias y compilados (se regeneran solos)
+node_modules/
+target/
+dist/
+.angular/
+ 
+# Datos y resultados generados por las pruebas
+tienda-api/data/
+mini-tienda/coverage/
+mini-tienda/playwright-report/
+mini-tienda/test-results/

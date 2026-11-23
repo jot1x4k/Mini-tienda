@@ -92,4 +92,36 @@ describe('ProductoCard', () => {
 
     expect(idEmitido).toBe(1);
   });
+
+  it('con descuento muestra el precio anterior, la oferta y el precio final', async () => {
+    await mostrar({ ...manzana, descuento: 20 });
+
+    expect(pantalla.querySelector('.tachado')?.textContent).toContain('Precio anterior: $20.5');
+    expect(pantalla.querySelector('.oferta')?.textContent).toContain('OFERTA -$20%');
+    expect(pantalla.textContent).toContain('Precio final: $16.4');
+  });
+
+  it('aplicar un descuento válido emite el id y el porcentaje', async () => {
+    await mostrar(manzana);
+    let emitido: { id: number; descuento: number } | undefined;
+    component.aplicarDescuento.subscribe((e) => (emitido = e));
+
+    component.descuentoNuevo = 10;
+    component.aplicarDescuentoClick();
+
+    expect(emitido).toEqual({ id: 1, descuento: 10 });
+  });
+
+  it('rechaza un descuento fuera de rango y no emite nada', async () => {
+    await mostrar(manzana);
+    const alerta = vi.spyOn(window, 'alert').mockImplementation(() => undefined);
+    let emitido: { id: number; descuento: number } | undefined;
+    component.aplicarDescuento.subscribe((e) => (emitido = e));
+
+    component.descuentoNuevo = 60;
+    component.aplicarDescuentoClick();
+
+    expect(alerta).toHaveBeenCalledWith('El descuento debe estar entre 0 y 50%.');
+    expect(emitido).toBeUndefined();
+  });
 });

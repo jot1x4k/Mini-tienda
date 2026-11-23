@@ -126,4 +126,14 @@ describe('ProductoApi', () => {
     expect(error?.error.mensaje).toBe('Lo sentimos, ya no hay stock');
     httpFalso.verify();
   });
+
+  it('aplicarDescuento hace POST a /api/productos/{id}/descuento/{porcentaje}', () => {
+    servicio.aplicarDescuento(1, 15).subscribe();
+
+    const peticion = httpFalso.expectOne(`${url}/1/descuento/15`);
+    expect(peticion.request.method).toBe('POST');
+    expect(peticion.request.body).toEqual({});
+    peticion.flush(null, { status: 204, statusText: 'No Content' });
+    httpFalso.verify();
+  });
 });

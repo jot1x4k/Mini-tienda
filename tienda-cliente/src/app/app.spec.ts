@@ -36,6 +36,7 @@ describe('App', () => {
     crear: ReturnType<typeof vi.fn>;
     actualizar: ReturnType<typeof vi.fn>;
     eliminar: ReturnType<typeof vi.fn>;
+    aplicarDescuento: ReturnType<typeof vi.fn>;
   };
 
   // Ayudante: crea el componente principal y espera a que se dibuje
@@ -52,6 +53,7 @@ describe('App', () => {
       crear: vi.fn(),
       actualizar: vi.fn(),
       eliminar: vi.fn(),
+      aplicarDescuento: vi.fn(),
     };
 
     await TestBed.configureTestingModule({
@@ -152,6 +154,124 @@ describe('App', () => {
 
     expect(apiFalsa.eliminar).not.toHaveBeenCalled();
     expect(app.productos().length).toBe(4);
+  });
+
+  it('al crear un producto lo agrega a la lista y muestra un mensaje', async () => {
+    const nuevo: Producto = {
+      id: 5,
+      nombre: 'Mango',
+      precio: 8.9,
+      stock: 10,
+      imagen: '/imagenes/mango.jpg',
+      descuento: 0,
+    };
+    apiFalsa.crear.mockReturnValue(of(nuevo));
+    const fixture = await crearApp();
+    const app = fixture.componentInstance;
+
+    app.crearProducto({
+      nombre: nuevo.nombre,
+      precio: nuevo.precio,
+      stock: nuevo.stock,
+      imagen: nuevo.imagen,
+      descuento: nuevo.descuento,
+    });
+    await fixture.whenStable();
+
+    expect(apiFalsa.crear).toHaveBeenCalledOnce();
+    expect(app.productos().length).toBe(5);
+    expect(app.productos()[4]).toEqual(nuevo);
+    expect(app.mensaje()).toBe('Mango creado');
+  });
+
+  it('si falla la creación muestra el mensaje del servidor', async () => {
+    apiFalsa.crear.mockReturnValue(
+      throwError(
+        () => new HttpErrorResponse({ status: 400, error: { mensaje: 'Datos inválidos' } }),
+      ),
+    );
+    const fixture = await crearApp();
+    const app = fixture.componentInstance;
+
+    app.crearProducto({
+      nombre: 'Mango',
+      precio: 8.9,
+      stock: 10,
+      imagen: '/imagenes/mango.jpg',
+      descuento: 0,
+    });
+    await fixture.whenStable();
+
+    expect(app.productos().length).toBe(4);
+    expect(app.mensaje()).toBe('Datos inválidos');
+    expect(app.esError()).toBe(true);
+  });
+
+  it('al reponer stock actualiza el producto y muestra un mensaje', async () => {
+    const actualizado = { ...catalogo[0], stock: 8 };
+    apiFalsa.actualizar.mockReturnValue(of(actualizado));
+    const fixture = await crearApp();
+    const app = fixture.componentInstance;
+
+    app.reponerStock(catalogo[0]);
+    await fixture.whenStable();
+
+    expect(apiFalsa.actualizar).toHaveBeenCalledWith(actualizado);
+    expect(app.productos()[0].stock).toBe(8);
+    expect(app.mensaje()).toBe('Stock de Manzana actualizado');
+  });
+
+  it('si falla la reposición muestra el mensaje por defecto', async () => {
+    apiFalsa.actualizar.mockReturnValue(throwError(() => new HttpErrorResponse({ status: 500 })));
+    const fixture = await crearApp();
+    const app = fixture.componentInstance;
+
+    app.reponerStock(catalogo[0]);
+    await fixture.whenStable();
+
+    expect(app.mensaje()).toBe('No se pudo actualizar');
+    expect(app.esError()).toBe(true);
+  });
+
+  it('si falla la eliminación muestra el mensaje por defecto', async () => {
+    vi.spyOn(window, 'confirm').mockReturnValue(true);
+    apiFalsa.eliminar.mockReturnValue(throwError(() => new HttpErrorResponse({ status: 500 })));
+    const fixture = await crearApp();
+    const app = fixture.componentInstance;
+
+    app.eliminarProducto(3);
+    await fixture.whenStable();
+
+    expect(app.productos().length).toBe(4);
+    expect(app.mensaje()).toBe('No se pudo eliminar');
+    expect(app.esError()).toBe(true);
+  });
+
+  it('al aplicar un descuento recarga la lista y muestra un mensaje', async () => {
+    apiFalsa.aplicarDescuento.mockReturnValue(of(undefined));
+    const fixture = await crearApp();
+    const app = fixture.componentInstance;
+
+    app.actualizarDescuento({ id: 1, descuento: 10 });
+    await fixture.whenStable();
+
+    expect(apiFalsa.aplicarDescuento).toHaveBeenCalledWith(1, 10);
+    expect(apiFalsa.listar).toHaveBeenCalledTimes(2);
+    expect(app.mensaje()).toBe('Descuento aplicado');
+  });
+
+  it('si falla el descuento muestra el mensaje por defecto', async () => {
+    apiFalsa.aplicarDescuento.mockReturnValue(
+      throwError(() => new HttpErrorResponse({ status: 500 })),
+    );
+    const fixture = await crearApp();
+    const app = fixture.componentInstance;
+
+    app.actualizarDescuento({ id: 1, descuento: 10 });
+    await fixture.whenStable();
+
+    expect(app.mensaje()).toBe('No se pudo actualizar el descuento');
+    expect(app.esError()).toBe(true);
   });
 
   it('el mensaje desaparece a los 3 segundos', async () => {
